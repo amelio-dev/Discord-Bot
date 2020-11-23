@@ -3,7 +3,7 @@ import random
 import re
 import setting
 
-from lib import help
+from lib import help, reaction_notifier
 
 #メッセージ送信者のボイスチャンネルを取得
 def GetAuthorVChannel(message):
@@ -83,15 +83,6 @@ def MakeLoLTeam(l):
     print(res)
     return res
 
-def uniqueUsers(post_user, user_list):
-    users = []
-    for user in user_list:
-        users.append(user.name)
-    if post_user.name in users:
-        return users
-    else:
-        users.append(post_user.name)
-        return users
 
 
 if __name__ == "__main__":  
@@ -105,6 +96,7 @@ if __name__ == "__main__":
     async def on_message(message):
         if message.author.bot:
             return
+
         if help.is_help(message.content):
             await message.channel.send(help.get_help_mes(message.content))
 
@@ -162,12 +154,10 @@ if __name__ == "__main__":
 
     @client.event
     async def on_reaction_add(reaction, user):
-        pattern = r"\:rl\:"
-        if re.search(pattern, str(reaction.emoji)):
-            users = await reaction.users().flatten()
-            user_names = uniqueUsers(reaction.message.author, users)
-            if user_names and len(user_names) >= 6:
-                mes = '\n'.join(user_names)
-                await reaction.message.channel.send("6人集まりました"+str(reaction.emoji) + "\n" + mes + "\n")
+        if reaction_notifier.is_rl_reaction(reaction):    
+            reacted_users = await reaction.users().flatten()
+            mes = reaction_notifier.is_rl_gathered(reaction, reacted_users)
+            if mes:
+                await reaction.message.channel.send(mes)
 
     client.run(setting.API_KEY)
