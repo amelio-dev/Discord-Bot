@@ -13,8 +13,8 @@ def get_help_mes(message):
 
 def _rl_help():
     mes = ""
-    mes += "rocket league メンバー集めツール　v1.0 作者：amelio\n"
-    mes += ":rl:が6人集まるとメッセージを投稿します\n"
+    mes += "rocket league メンバー集めツール　v1.2 作者：amelio\n"
+    mes += ":rl:が6人集まるとメンションを投稿します\n"
     mes += "  注意)投稿者はリアクションしてもカウントされません\n"
     return mes
 
