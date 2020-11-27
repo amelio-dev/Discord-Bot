@@ -1,7 +1,9 @@
 import discord
 import setting
 
-from lib import help, reaction_notifier, team_splitter
+from lib.help import Help
+from lib.reaction_notifier import ReactionNotifier
+from lib.team_splitter import TeamSplitter
 
 if __name__ == "__main__":  
     client = discord.Client()
@@ -14,19 +16,17 @@ if __name__ == "__main__":
     async def on_message(message):
         if message.author.bot:
             return
-
-        if help.is_help(message.content):
-            await message.channel.send(help.get_help_mes(message.content))
-
-        elif team_splitter.is_team_command(message.content):
-            mes = team_splitter.create_teams(client, message)
+        if Help().is_help(message.content):
+            await message.channel.send(Help().get_help_mes(message.content))
+        elif TeamSplitter().is_team_command(message.content):
+            mes = TeamSplitter().create_teams(client, message)
             await message.channel.send(mes)
 
     @client.event
     async def on_reaction_add(reaction, user):
-        if reaction_notifier.is_rl_reaction(reaction):    
+        if ReactionNotifier().is_rl_reaction(reaction):    
             reacted_users = await reaction.users().flatten()
-            mes = reaction_notifier.is_rl_gathered(reaction, reacted_users)
+            mes = ReactionNotifier().is_rl_gathered(reaction, reacted_users)
             if mes:
                 await reaction.message.channel.send(mes)
 
