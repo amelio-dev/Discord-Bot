@@ -10,7 +10,7 @@ class ReactionNotifier:
         for user in user_list:
             users.append(user)
 
-        if post_user.name not in users:
+        if post_user not in users:
             users.append(post_user)
 
         return users
@@ -27,5 +27,5 @@ class ReactionNotifier:
         return re.search(self._RL_PATTERN, str(reaction.emoji))
 
     def _create_gathered_message(self, reaction, user_names):
-        mes = '\n'.join(user_names)
+        mes = '\n'.join([user.mention for user in user_names])
         return str(self.RL_TEAM_SIZE * 2) + "人集まりました" + str(reaction.emoji) + "\n" + mes + "\n"
