@@ -13,6 +13,7 @@ class ReactionNotifier:
         if post_user.name not in users:
             users.append(post_user.name)
 
+
         return users
 
     def is_rl_gathered(self, reaction, users):
