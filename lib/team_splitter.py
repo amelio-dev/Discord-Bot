@@ -23,6 +23,7 @@ class TeamSplitter:
             return self.DEFAULT_TEAM_SIZE
 
     # 手動でユーザの追加、除外設定を行う場合
+    # TODO: [a, b]のようにコンマ後にスペースがある場合も名前の一部として認識されるので要修正(#20)
     def modify_user_list(self, target_list, message):
         appending_users = []
         removing_users = []
