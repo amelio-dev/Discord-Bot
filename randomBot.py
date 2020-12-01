@@ -1,5 +1,7 @@
 import discord
+from discord.ext import tasks
 import setting
+import datetime
 
 from lib.help import Help
 from lib.reaction_notifier import ReactionNotifier
@@ -11,6 +13,15 @@ if __name__ == "__main__":
     @client.event
     async def on_ready():
         print('ログインしました')
+
+    @client.event
+    async def on_disconnect():
+        print("クライアントが切断されました")
+
+    @client.event
+    async def on_error(event, *args, **kwargs): 
+        message = args[0] #Gets the message object 
+        print("warning :", message) #logs the error 
 
     @client.event
     async def on_message(message):
@@ -29,5 +40,10 @@ if __name__ == "__main__":
             mes = ReactionNotifier().is_rl_gathered(reaction, reacted_users)
             if mes:
                 await reaction.message.channel.send(mes)
+    
+    @tasks.loop(seconds=1800)
+    async def loop():
+        print("active")
 
+    loop.start()
     client.run(setting.API_KEY)

@@ -30,7 +30,7 @@ class TeamSplitter:
         pattern = r"\-user\s\[(.+)\]"
         result = re.search(pattern, message.content)
         if result:
-            print(result.group(1))
+            print("modify_user_list :", result.group(1))
             for user in result.group(1).split(","):
                 if not user:
                     continue
@@ -39,7 +39,7 @@ class TeamSplitter:
                 else:
                     appending_users.append(user)
         else:
-            print("no item")
+            print("modify_user_list : no item")
         target_list.extend(appending_users)
         target_list = list(set(target_list) - set(removing_users))
         return target_list
