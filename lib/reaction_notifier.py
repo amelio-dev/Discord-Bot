@@ -3,7 +3,9 @@ import re
 
 class ReactionNotifier:
     _RL_PATTERN = r"\:rl\:"
+    _TEST_PATTERN = r"\:test\:"
     RL_TEAM_SIZE = 3
+    TEST_TEAM_SIZE = 1
 
     def get_unique_users(self, post_user, user_list):
         users = []
@@ -29,3 +31,18 @@ class ReactionNotifier:
     def _create_gathered_message(self, reaction, user_names):
         mes = '\n'.join([user.mention for user in user_names])
         return str(self.RL_TEAM_SIZE * 2) + "人集まりました" + str(reaction.emoji) + "\n" + mes + "\n"
+
+    def is_test_reaction(self, reaction):
+        return re.search(self._TEST_PATTERN, str(reaction.emoji))
+
+    def is_test_gathered(self, reaction, users):
+        unique_users = self.get_unique_users(reaction.message.author, users)
+
+        if unique_users and len(unique_users) >= self.TEST_TEAM_SIZE:
+            return self._create_test_gathered_message(reaction, unique_users)
+        else:
+            return None
+
+    def _create_test_gathered_message(self, reaction, user_names):
+        mes = '\n'.join([user.mention for user in user_names])
+        return str(self.TEST_TEAM_SIZE) + "人集まりました" + str(reaction.emoji) + "\n" + mes + "\n"

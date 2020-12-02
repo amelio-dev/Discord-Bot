@@ -1,5 +1,4 @@
 import discord
-from discord.ext import tasks
 import setting
 import datetime
 
@@ -17,6 +16,7 @@ if __name__ == "__main__":
     @client.event
     async def on_disconnect():
         print("クライアントが切断されました")
+        client.run(setting.API_KEY)
 
     @client.event
     async def on_error(event, *args, **kwargs): 
@@ -40,10 +40,12 @@ if __name__ == "__main__":
             mes = ReactionNotifier().is_rl_gathered(reaction, reacted_users)
             if mes:
                 await reaction.message.channel.send(mes)
-    
-    @tasks.loop(seconds=1800)
-    async def loop():
-        print("active")
+        elif ReactionNotifier().is_test_reaction(reaction):
+            print("hit")
+            reacted_users = await reaction.users().flatten()
+            mes = ReactionNotifier().is_test_gathered(reaction, reacted_users)
+            if mes:
+                print("tru")
+                await reaction.message.channel.send(mes)
 
-    loop.start()
     client.run(setting.API_KEY)
