@@ -80,10 +80,7 @@ class TeamSplitter:
     def is_team_command(self, message):
         return message.startswith('/team')
 
-    def create_teams(self, client, message):
-        util = Util(client)
-        vc = util.GetAuthorVChannel(message)
-        
+    def create_teams(self, vc, message):
         if vc is None:
             return "error:投稿者はボイスチャンネルに接続していません"
         

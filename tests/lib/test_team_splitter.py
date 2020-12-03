@@ -211,7 +211,7 @@ def test_create_teams(mocker, vc, message, expect):
     mocker.patch("random.sample", side_effect=rand_return_value)
     # modify_user_listは内部でsetを使っているので、利用すると順番が入れ替わる
     mocker.patch("lib.team_splitter.TeamSplitter.modify_user_list", side_effect=modify_user_list_mock)
-    assert TeamSplitter().create_teams(mock.Mock(), message) == expect
+    assert TeamSplitter().create_teams(vc, message) == expect
 
 @pytest.mark.parametrize("team_num, team_size, expect", [
     (2, 50, "----------|teamNum = 2|----------\n"),  

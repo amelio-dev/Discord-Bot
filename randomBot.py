@@ -6,6 +6,12 @@ from lib.help import Help
 from lib.reaction_notifier import ReactionNotifier
 from lib.team_splitter import TeamSplitter
 
+def GetAuthorVChannel(client, message):
+    for server in client.guilds:
+        for channel in server.voice_channels:
+            if message.author in channel.members:
+                return channel
+
 if __name__ == "__main__":  
     client = discord.Client()
 
@@ -30,7 +36,7 @@ if __name__ == "__main__":
         if Help().is_help(message.content):
             await message.channel.send(Help().get_help_mes(message.content))
         elif TeamSplitter().is_team_command(message.content):
-            mes = TeamSplitter().create_teams(client, message)
+            mes = TeamSplitter().create_teams(GetAuthorVChannel(client, message), message)
             await message.channel.send(mes)
 
     @client.event
@@ -41,11 +47,11 @@ if __name__ == "__main__":
             if mes:
                 await reaction.message.channel.send(mes)
         elif ReactionNotifier().is_test_reaction(reaction):
-            print("hit")
+            print("test is reacted")
             reacted_users = await reaction.users().flatten()
             mes = ReactionNotifier().is_test_gathered(reaction, reacted_users)
             if mes:
-                print("tru")
+                print("test gatherd")
                 await reaction.message.channel.send(mes)
 
     client.run(setting.API_KEY)
