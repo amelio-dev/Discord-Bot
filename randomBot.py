@@ -14,7 +14,7 @@ def GetAuthorVChannel(client, message):
     
 
 if __name__ == "__main__":
-    intents = discord.Intents(messages=True, guilds=True, members=True)
+    intents = discord.Intents(messages=True, guilds=True, members=True, voice_states=True, reactions=True)
     client = discord.Client(intents=intents)
 
     @client.event
