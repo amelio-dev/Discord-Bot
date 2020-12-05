@@ -11,9 +11,11 @@ def GetAuthorVChannel(client, message):
         for channel in server.voice_channels:
             if message.author in channel.members:
                 return channel
+    
 
-if __name__ == "__main__":  
-    client = discord.Client()
+if __name__ == "__main__":
+    intents = discord.Intents(messages=True, guilds=True, members=True)
+    client = discord.Client(intents=intents)
 
     @client.event
     async def on_ready():
