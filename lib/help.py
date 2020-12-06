@@ -14,14 +14,14 @@ class Help:
 
     def _rl_help(self):
         mes = ""
-        mes += "rocket league メンバー集めツール　v1.2 作者：amelio\n"
+        mes += "rocket league メンバー集めツール　v1.3 作者：amelio\n"
         mes += ":rl:が6人集まるとメンションを投稿します\n"
         mes += "  注意)投稿者はリアクションしてもカウントされません\n"
         return mes
 
     def _team_help(self):
         mes = ""
-        mes += "チーム分け支援システム　v1.2 作者：amelio\n"
+        mes += "チーム分け支援システム　v1.3 作者：amelio\n"
         mes += "使い方：以下のコマンドをチャット欄に入力\n     /team\n"
         mes += "説明：自分が居るボイスチャンネルのユーザを2チームに分けます．\n\n"
         mes += "オプション：\n"
