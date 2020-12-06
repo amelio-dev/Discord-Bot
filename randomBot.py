@@ -6,7 +6,8 @@ from lib.reaction_notifier import ReactionNotifier
 from lib.team_splitter import TeamSplitter
 
 if __name__ == "__main__":  
-    client = discord.Client()
+    intents = discord.Intents(messages=True, guilds=True, members=True, voice_states=True, reactions=True)
+    client = discord.Client(intents=intents)
 
     @client.event
     async def on_ready():
